@@ -30,13 +30,14 @@ public interface IContactService
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Коллекция контактов.</returns>
     Task<IReadOnlyCollection<ContactResponseDto>> GetAllAsync(CancellationToken cancellationToken);
-    
+
     /// <summary>
     /// Обновляет запись контакта.
     /// </summary>
-    /// <param name="model">Модель обновления контакта.</param>
+    /// <param name="id"></param>
+    /// <param name="model"></param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
-    Task UpdateAsync(UpdateContactDto model, CancellationToken cancellationToken);
+    Task<ContactResponseDto> UpdateAsync(Guid id, UpdateContactDto model, CancellationToken cancellationToken);
 
     /// <summary>
     /// Удаляет контакт.

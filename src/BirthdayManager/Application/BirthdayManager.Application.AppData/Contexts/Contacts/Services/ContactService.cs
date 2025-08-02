@@ -62,16 +62,25 @@ public class ContactService : IContactService
     }
 
     /// <inheritdoc />
-    public async Task UpdateAsync(UpdateContactDto model, CancellationToken cancellationToken)
+    public async Task<ContactResponseDto> UpdateAsync(Guid id, UpdateContactDto model,
+        CancellationToken cancellationToken)
     {
-        var contact = new Contact
-        {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Birthday = model.Birthday
-        };
+        var contact = await _repository.GetByIdAsync(id, cancellationToken);
+
+        contact.FirstName = model.FirstName;
+        contact.LastName = model.LastName;
+        contact.Birthday = model.Birthday;
 
         await _repository.UpdateAsync(contact, cancellationToken);
+
+        var responseDto = new ContactResponseDto
+        {
+            FirstName = contact.FirstName,
+            LastName = contact.LastName,
+            Birthday = contact.Birthday
+        };
+        
+        return responseDto;
     }
 
     /// <inheritdoc />

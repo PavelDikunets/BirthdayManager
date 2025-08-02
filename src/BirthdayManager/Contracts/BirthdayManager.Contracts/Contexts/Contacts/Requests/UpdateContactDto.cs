@@ -1,7 +1,7 @@
 ﻿namespace BirthdayManager.Contracts.Contexts.Contacts.Requests;
 
 /// <summary>
-/// Контракт для обновления записей в контакте.
+/// Модель для обновления контакта.
 /// </summary>
 public class UpdateContactDto : CreateContactDto
 {
