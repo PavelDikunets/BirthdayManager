@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Contracts\BirthdayManager.Contracts\BirthdayManager.Contracts.csproj" />
+      <ProjectReference Include="..\..\Domain\BirthdayManager.Domain\BirthdayManager.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
