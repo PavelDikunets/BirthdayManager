@@ -11,14 +11,14 @@ public class Contact : BaseEntity
     /// Имя.
     /// </summary>
     public string FirstName { get; set; }
-    
+
     /// <summary>
     /// Фамилия.
     /// </summary>
     public string LastName { get; set; }
-    
+
     /// <summary>
     /// Дата рождения.
     /// </summary>
-    public DateTime Birthday { get; set; }
+    public DateOnly Birthday { get; set; }
 }
