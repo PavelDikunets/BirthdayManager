@@ -15,6 +15,7 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
     /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Contact> builder)
     {
+        builder.ToTable("Contacts");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.FirstName).HasMaxLength(50).IsRequired();

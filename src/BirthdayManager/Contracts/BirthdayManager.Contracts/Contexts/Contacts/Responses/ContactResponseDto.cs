@@ -1,7 +1,7 @@
 ﻿namespace BirthdayManager.Contracts.Contexts.Contacts.Responses;
 
 /// <summary>
-/// Модель контакта для отображения. 
+/// Модель для отображения контакта. 
 /// </summary>
 public class ContactResponseDto
 {

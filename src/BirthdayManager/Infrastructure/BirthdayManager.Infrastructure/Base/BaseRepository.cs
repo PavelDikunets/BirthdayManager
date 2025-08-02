@@ -39,7 +39,7 @@ public class Repository<TEntity, TContext> : IBaseRepository<TEntity, TContext>
         var entity = await DbSet.FindAsync([id], cancellationToken);
 
         if (entity == null)
-            throw new KeyNotFoundException($"Сущность с идентификатором '{id}' не найдена");
+            throw new KeyNotFoundException();
 
         return entity;
     }

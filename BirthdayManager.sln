@@ -28,8 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirthdayManager.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirthdayManager.Infrastructure.ComponentRegistrar", "src\BirthdayManager\Infrastructure\BirthdayManager.Infrastructure.ComponentRegistrar\BirthdayManager.Infrastructure.ComponentRegistrar.csproj", "{2536AB47-30E6-4CCC-B2A9-43FEA791E634}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8ACE0CA6-1196-4DA5-B78E-462B2C9D57C4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirthdayManager.Host.Api", "src\BirthdayManager\Host\BirthdayManager.Host.Api\BirthdayManager.Host.Api.csproj", "{FA3E38A2-D36D-4891-B45D-7968701B9567}"
 EndProject
 Global
