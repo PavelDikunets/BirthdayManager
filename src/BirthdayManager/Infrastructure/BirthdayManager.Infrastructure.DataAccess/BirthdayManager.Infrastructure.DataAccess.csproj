@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Application\BirthdayManager.Application.AppData\BirthdayManager.Application.AppData.csproj" />
+      <ProjectReference Include="..\BirthdayManager.Infrastructure\BirthdayManager.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
     </ItemGroup>
 
 </Project>
