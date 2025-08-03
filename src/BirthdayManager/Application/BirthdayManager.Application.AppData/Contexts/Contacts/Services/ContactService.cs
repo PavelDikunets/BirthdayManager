@@ -23,8 +23,7 @@ public class ContactService : IContactService
     /// <inheritdoc />
     public async Task<Guid> CreateAsync(CreateContactDto model, CancellationToken cancellationToken)
     {
-        var exists = await IsExistsAsync(model, cancellationToken);
-        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
+        await CheckIfExistsAsync(model, cancellationToken);
 
         var contact = new Contact
         {
@@ -36,6 +35,8 @@ public class ContactService : IContactService
 
         return await _repository.CreateAsync(contact, cancellationToken);
     }
+
+
 
     /// <inheritdoc />
     public async Task<ContactResponseDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -74,8 +75,7 @@ public class ContactService : IContactService
     {
         var contact = await _repository.GetByIdAsync(id, cancellationToken);
 
-        var exists = await IsExistsAsync(model, cancellationToken);
-        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
+        await CheckIfExistsAsync(model, cancellationToken);
 
         contact.FirstName = model.FirstName;
         contact.LastName = model.LastName;
@@ -112,5 +112,12 @@ public class ContactService : IContactService
         };
 
         return await _repository.IsExistsAsync(contact, cancellationToken);
+    }
+    
+    
+    private async Task CheckIfExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
+    {
+        var exists = await IsExistsAsync(model, cancellationToken);
+        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
     }
 }
