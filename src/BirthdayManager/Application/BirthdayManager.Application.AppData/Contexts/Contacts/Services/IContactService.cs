@@ -45,4 +45,12 @@ public interface IContactService
     /// <param name="id">Идентификатор контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Проверяет наличие контакта.
+    /// </summary>
+    /// <param name="model">Модель контакта.</param>
+    /// <param name="cancellationToken">Токен отмены операции.</param>
+    /// <returns>True - контакт существует. False - контакт не существует.</returns>
+    Task<bool> IsExistsAsync(CreateContactDto model, CancellationToken cancellationToken);
 }

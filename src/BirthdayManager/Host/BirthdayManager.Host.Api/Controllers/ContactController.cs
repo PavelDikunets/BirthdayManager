@@ -11,6 +11,7 @@ namespace BirthdayManager.Host.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/contacts")]
+[ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
 public class ContactController : ControllerBase
 {
     private readonly IContactService _contactService;
@@ -31,8 +32,8 @@ public class ContactController : ControllerBase
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Идентификатор созданного контакта.</returns>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateContactAsync([FromBody] CreateContactDto model,
         CancellationToken cancellationToken)
     {
@@ -62,7 +63,6 @@ public class ContactController : ControllerBase
     /// <returns>Коллекция контактов.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAllContactsAsync(CancellationToken cancellationToken)
     {
         var contacts = await _contactService.GetAllAsync(cancellationToken);

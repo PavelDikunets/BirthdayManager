@@ -29,6 +29,9 @@ public class ContactService : IContactService
             Birthday = model.Birthday
         };
 
+        var exists = await IsExistsAsync(model, cancellationToken);
+        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
+        
         return await _repository.CreateAsync(contact, cancellationToken);
     }
 
@@ -79,7 +82,7 @@ public class ContactService : IContactService
             LastName = contact.LastName,
             Birthday = contact.Birthday
         };
-        
+
         return responseDto;
     }
 
@@ -87,5 +90,17 @@ public class ContactService : IContactService
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         await _repository.DeleteAsync(id, cancellationToken);
+    }
+
+    public async Task<bool> IsExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
+    {
+        var contact = new Contact
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Birthday = model.Birthday
+        };
+
+        return await _repository.IsExistsAsync(contact, cancellationToken);
     }
 }

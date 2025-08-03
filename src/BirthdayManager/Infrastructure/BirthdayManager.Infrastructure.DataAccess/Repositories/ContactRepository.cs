@@ -49,4 +49,11 @@ public class ContactRepository : IContactRepository
     {
         await _repository.DeleteAsync(id, cancellationToken);
     }
+    
+    public async Task<bool> IsExistsAsync(Contact contact, CancellationToken cancellationToken)
+    {
+        return await _repository.GetByPredicate(x =>
+                x.FirstName == contact.FirstName && x.LastName == contact.LastName && x.Birthday == contact.Birthday)
+            .AsNoTracking().AnyAsync(cancellationToken);
+    }
 }
