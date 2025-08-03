@@ -36,6 +36,8 @@ public class ContactService : IContactService
         return await _repository.CreateAsync(contact, cancellationToken);
     }
 
+
+
     /// <inheritdoc />
     public async Task<ContactResponseDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
@@ -81,7 +83,7 @@ public class ContactService : IContactService
         contact.Type = model.Type;
 
         await _repository.UpdateAsync(contact, cancellationToken);
-
+        
         var responseDto = new ContactResponseDto
         {
             FirstName = contact.FirstName,
@@ -111,8 +113,8 @@ public class ContactService : IContactService
 
         return await _repository.IsExistsAsync(contact, cancellationToken);
     }
-
-
+    
+    
     private async Task CheckIfExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
     {
         var exists = await IsExistsAsync(model, cancellationToken);
