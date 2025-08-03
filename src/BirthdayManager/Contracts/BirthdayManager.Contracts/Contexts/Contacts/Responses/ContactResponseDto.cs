@@ -1,22 +1,10 @@
-﻿namespace BirthdayManager.Contracts.Contexts.Contacts.Responses;
+﻿using BirthdayManager.Contracts.Contexts.Contacts.Requests;
+
+namespace BirthdayManager.Contracts.Contexts.Contacts.Responses;
 
 /// <summary>
 /// Модель для отображения контакта. 
 /// </summary>
-public class ContactResponseDto
+public class ContactResponseDto : CreateContactDto
 {
-    /// <summary>
-    /// Имя.
-    /// </summary>
-    public string FirstName { get; set; }
-
-    /// <summary>
-    /// Фамилия.
-    /// </summary>
-    public string LastName { get; set; }
-
-    /// <summary>
-    /// Дата рождения.
-    /// </summary>
-    public DateOnly Birthday { get; set; }
 }

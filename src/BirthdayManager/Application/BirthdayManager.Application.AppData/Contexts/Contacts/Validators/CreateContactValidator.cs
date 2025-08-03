@@ -20,8 +20,11 @@ public class CreateContactValidator : AbstractValidator<CreateContactDto>
         RuleFor(x => x.Birthday)
             .NotEmpty().WithMessage("Дата рождения обязательна для заполнения.")
             .Must(date => date != default).WithMessage("Дата рождения должна быть корректной.")
-            .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today)).WithMessage("Дата рождения не может быть в будущем.")
+            .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
+            .WithMessage("Дата рождения не может быть в будущем.")
             .Must(date => date.Year >= 1900 && date.Year <= DateTime.Today.Year)
             .WithMessage($"Год рождения должен быть между 1900 и {DateTime.Today.Year}.");
+
+        RuleFor(x => x.Type).IsInEnum().WithMessage("Некорректный тип контакта.");
     }
 }

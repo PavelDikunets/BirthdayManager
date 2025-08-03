@@ -1,4 +1,5 @@
-﻿using BirthdayManager.Domain.Base;
+﻿using BirthdayManager.Common.Enums;
+using BirthdayManager.Domain.Base;
 
 namespace BirthdayManager.Domain.Contacts;
 
@@ -21,4 +22,9 @@ public class Contact : BaseEntity
     /// Дата рождения.
     /// </summary>
     public DateOnly Birthday { get; set; }
+
+    /// <summary>
+    /// Тип контакта.
+    /// </summary>
+    public ContactType Type { get; set; }
 }

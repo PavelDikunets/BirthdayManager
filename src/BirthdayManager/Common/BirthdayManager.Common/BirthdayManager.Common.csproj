@@ -7,12 +7,4 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Contexts\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Common\BirthdayManager.Common\BirthdayManager.Common.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common\BirthdayManager.Common\BirthdayManager.Common.csproj" />
+    </ItemGroup>
+
 </Project>

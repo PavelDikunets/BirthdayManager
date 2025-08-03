@@ -1,4 +1,7 @@
-﻿namespace BirthdayManager.Contracts.Contexts.Contacts.Requests;
+﻿using System.Text.Json.Serialization;
+using BirthdayManager.Common.Enums;
+
+namespace BirthdayManager.Contracts.Contexts.Contacts.Requests;
 
 /// <summary>
 /// Модель для создания контакта.
@@ -19,4 +22,10 @@ public class CreateContactDto
     /// Дата рождения.
     /// </summary>
     public DateOnly Birthday { get; set; }
+
+    /// <summary>
+    /// Тип контакта.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public ContactType Type { get; set; }
 }
