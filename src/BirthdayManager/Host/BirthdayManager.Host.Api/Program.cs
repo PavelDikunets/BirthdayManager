@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers( );
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "API для ведения списка дней рождения"
     });
-
+    
     var docTypeMarkers = new[]
     {
         typeof(ContactResponseDto),
@@ -39,6 +39,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddApplicationServices();
 builder.Services.AddRepositories();
+builder.Services.AddFluentValidation();
 builder.Services.AddDbContext(builder.Configuration.GetConnectionString("Postgres"));
 
 var app = builder.Build();

@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using BirthdayManager.Contracts.Common;
+using FluentValidation;
 
 namespace BirthdayManager.Host.Api.Middlewares;
 
@@ -43,6 +44,12 @@ public class ErrorHandlingMiddleware
 
         switch (exception)
         {
+            case ValidationException validationEx:
+                error.Message = "Ошибка валидации";
+                error.Details = string.Join("; ", validationEx.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}"));
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                break;
+            
             case ArgumentException argEx:
                 error.Message = "Некорректные данные запроса";
                 error.Details = argEx.Message;
@@ -63,7 +70,6 @@ public class ErrorHandlingMiddleware
         }
 
         var response = JsonSerializer.Serialize(error);
-
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(response);
     }
