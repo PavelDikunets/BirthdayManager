@@ -20,6 +20,7 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.FirstName).HasMaxLength(50).IsRequired();
         builder.Property(x => x.LastName).HasMaxLength(50).IsRequired();
-        builder.Property(x => x.Birthday).HasConversion<DateOnly>().IsRequired();
+        builder.Property(x => x.Birthday).IsRequired();
+        builder.Property(x => x.Type).IsRequired();
     }
 }

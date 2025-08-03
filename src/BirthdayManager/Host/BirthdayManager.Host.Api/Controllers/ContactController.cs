@@ -34,7 +34,7 @@ public class ContactController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateContactAsync([FromBody] CreateContactDto model,
+    public async Task<IActionResult> CreateContactAsync([FromForm] CreateContactDto model,
         CancellationToken cancellationToken)
     {
         var contactId = await _contactService.CreateAsync(model, cancellationToken);
@@ -48,7 +48,7 @@ public class ContactController : ControllerBase
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Модель контакта.</returns>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetContactByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
@@ -80,7 +80,7 @@ public class ContactController : ControllerBase
     [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateContactAsync([FromRoute] Guid id, [FromBody] UpdateContactDto model,
+    public async Task<IActionResult> UpdateContactAsync([FromRoute] Guid id, [FromForm] UpdateContactDto model,
         CancellationToken cancellationToken)
     {
         var updatedContact = await _contactService.UpdateAsync(id, model, cancellationToken);
@@ -94,7 +94,7 @@ public class ContactController : ControllerBase
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Результат операции удаления контакта.</returns>
     [HttpDelete("{id:guid}")]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteContactAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
