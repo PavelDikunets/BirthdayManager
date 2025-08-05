@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\BirthdayManager.Common\BirthdayManager.Common.csproj" />
+      <ProjectReference Include="..\..\Contracts\BirthdayManager.Contracts\BirthdayManager.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

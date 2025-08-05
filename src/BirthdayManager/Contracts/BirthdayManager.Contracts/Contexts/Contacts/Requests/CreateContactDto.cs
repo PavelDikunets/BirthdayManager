@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using BirthdayManager.Common.Enums;
+using BirthdayManager.Contracts.Enums;
 
 namespace BirthdayManager.Contracts.Contexts.Contacts.Requests;
 
@@ -27,5 +27,5 @@ public class CreateContactDto
     /// Тип контакта.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public ContactType Type { get; set; }
+    public ContactTypeDto Type { get; set; }
 }

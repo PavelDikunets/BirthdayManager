@@ -45,26 +45,26 @@ public class ErrorHandlingMiddleware
         switch (exception)
         {
             case ValidationException validationEx:
-                error.Message = "Ошибка валидации";
+                error.Message = "Ошибка валидации.";
                 error.Details = string.Join("; ", validationEx.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage}"));
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
             
             case ArgumentException argEx:
-                error.Message = "Некорректные данные запроса";
+                error.Message = "Некорректные данные запроса.";
                 error.Details = argEx.Message;
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
 
             case KeyNotFoundException:
-                error.Message = "Ресурс не найден";
+                error.Message = "Ресурс не найден.";
                 error.Details = exception.Message;
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 break;
 
             default:
-                error.Message = "Внутренняя ошибка сервера";
-                error.Details = "Пожалуйста, попробуйте позже";
+                error.Message = "Внутренняя ошибка сервера.";
+                error.Details = "Пожалуйста, попробуйте позже.";
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 break;
         }

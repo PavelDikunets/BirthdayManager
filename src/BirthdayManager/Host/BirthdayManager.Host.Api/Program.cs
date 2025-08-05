@@ -1,6 +1,6 @@
-using BirthdayManager.Common.Enums;
 using BirthdayManager.Contracts.Contexts.Contacts.Requests;
 using BirthdayManager.Contracts.Contexts.Contacts.Responses;
+using BirthdayManager.Contracts.Enums;
 using BirthdayManager.Host.Api.Controllers;
 using BirthdayManager.Host.Api.Middlewares;
 using BirthdayManager.Infrastructure.ComponentRegistrar;
@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen(options =>
         typeof(UpdateContactDto),
         typeof(ContactResponseDto),
         typeof(ContactController),
-        typeof(ContactType)
+        typeof(ContactTypeDto)
     };
 
     foreach (var marker in docTypeMarkers)

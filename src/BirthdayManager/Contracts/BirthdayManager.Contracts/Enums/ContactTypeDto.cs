@@ -1,4 +1,4 @@
-﻿namespace BirthdayManager.Common.Enums;
+﻿namespace BirthdayManager.Contracts.Enums;
 
 /// <summary>
 /// Тип контакта.
@@ -9,7 +9,7 @@
 /// 3 - Коллеги. 
 /// </remarks>
 /// </summary>
-public enum ContactType
+public enum ContactTypeDto
 {
     /// <summary>
     /// Знакомые,

@@ -1,7 +1,7 @@
 ﻿using BirthdayManager.Application.AppData.Contexts.Contacts.Repositories;
-using BirthdayManager.Common.Enums;
 using BirthdayManager.Contracts.Contexts.Contacts.Requests;
 using BirthdayManager.Contracts.Contexts.Contacts.Responses;
+using BirthdayManager.Contracts.Enums;
 using BirthdayManager.Domain.Contacts;
 
 namespace BirthdayManager.Application.AppData.Contexts.Contacts.Services;
@@ -19,7 +19,7 @@ public class ContactService : IContactService
     {
         _repository = repository;
     }
-
+    
     /// <inheritdoc />
     public async Task<Guid> CreateAsync(CreateContactDto model, CancellationToken cancellationToken)
     {
@@ -30,12 +30,11 @@ public class ContactService : IContactService
             FirstName = model.FirstName,
             LastName = model.LastName,
             Birthday = model.Birthday,
-            Type = model.Type,
+            Type = (ContactType)model.Type
         };
 
         return await _repository.CreateAsync(contact, cancellationToken);
     }
-
 
 
     /// <inheritdoc />
@@ -48,7 +47,7 @@ public class ContactService : IContactService
             FirstName = contact.FirstName,
             LastName = contact.LastName,
             Birthday = contact.Birthday,
-            Type = contact.Type,
+            Type = (ContactTypeDto)contact.Type
         };
         return model;
     }
@@ -63,7 +62,7 @@ public class ContactService : IContactService
             FirstName = contact.FirstName,
             LastName = contact.LastName,
             Birthday = contact.Birthday,
-            Type = contact.Type,
+            Type = (ContactTypeDto)contact.Type
         }).ToList();
 
         return models;
@@ -80,16 +79,16 @@ public class ContactService : IContactService
         contact.FirstName = model.FirstName;
         contact.LastName = model.LastName;
         contact.Birthday = model.Birthday;
-        contact.Type = model.Type;
+        contact.Type = contact.Type;
 
         await _repository.UpdateAsync(contact, cancellationToken);
-        
+
         var responseDto = new ContactResponseDto
         {
             FirstName = contact.FirstName,
             LastName = contact.LastName,
             Birthday = contact.Birthday,
-            Type = contact.Type,
+            Type = (ContactTypeDto)contact.Type
         };
 
         return responseDto;
@@ -108,16 +107,16 @@ public class ContactService : IContactService
             FirstName = model.FirstName,
             LastName = model.LastName,
             Birthday = model.Birthday,
-            Type = model.Type,
+            Type = (ContactType)model.Type
         };
 
         return await _repository.IsExistsAsync(contact, cancellationToken);
     }
-    
-    
+
+
     private async Task CheckIfExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
     {
         var exists = await IsExistsAsync(model, cancellationToken);
-        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
+        if (exists) throw new ArgumentException("Контакт с такими данными уже существует.");
     }
 }
