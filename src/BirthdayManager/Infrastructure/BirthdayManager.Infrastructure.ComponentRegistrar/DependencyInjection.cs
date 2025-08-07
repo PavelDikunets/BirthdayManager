@@ -1,6 +1,8 @@
 ﻿using BirthdayManager.Application.AppData.Contexts.Contacts.Repositories;
 using BirthdayManager.Application.AppData.Contexts.Contacts.Services;
-using BirthdayManager.Application.AppData.Contexts.Contacts.Validators;
+using BirthdayManager.Application.AppData.Contexts.Photos.Repositories;
+using BirthdayManager.Application.AppData.Contexts.Photos.Services;
+using BirthdayManager.Application.AppData.Validators;
 using BirthdayManager.Infrastructure.Base;
 using BirthdayManager.Infrastructure.DataAccess;
 using BirthdayManager.Infrastructure.DataAccess.Repositories;
@@ -20,6 +22,7 @@ public static class DependencyInjection
     public static void AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<IContactService, ContactService>();
+        services.AddScoped<IPhotoService, PhotoService>();
     }
 
     // Регистрация репозиториев.
@@ -27,6 +30,7 @@ public static class DependencyInjection
     {
         services.AddScoped(typeof(IBaseRepository<,>), typeof(Repository<,>));
         services.AddScoped<IContactRepository, ContactRepository>();
+        services.AddScoped<IPhotoRepository, PhotoRepository>();
     }
 
     // Регистрация контекста базы данных.
@@ -39,7 +43,6 @@ public static class DependencyInjection
     public static void AddFluentValidation(this IServiceCollection services)
     {
         services.AddValidatorsFromAssemblyContaining<CreateContactValidator>();
-        services.AddValidatorsFromAssemblyContaining<UpdateContactValidator>();
         services.AddFluentValidationAutoValidation();
     }
 }

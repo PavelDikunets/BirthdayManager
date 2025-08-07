@@ -1,4 +1,5 @@
 ﻿using BirthdayManager.Domain.Contacts;
+using BirthdayManager.Domain.Photos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,5 +23,12 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
         builder.Property(x => x.LastName).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Birthday).IsRequired();
         builder.Property(x => x.Type).IsRequired();
+
+
+        builder.HasOne(x => x.Photo)
+            .WithOne(x => x.Contact)
+            .HasForeignKey<Photo>(x => x.ContactId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

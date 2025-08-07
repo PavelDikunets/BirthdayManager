@@ -1,6 +1,6 @@
 ﻿using BirthdayManager.Contracts.Enums;
 using BirthdayManager.Domain.Base;
-using BirthdayManager.Domain.Images;
+using BirthdayManager.Domain.Photos;
 
 namespace BirthdayManager.Domain.Contacts;
 
@@ -32,5 +32,5 @@ public class Contact : BaseEntity
     /// <summary>
     /// Изображение контакта.
     /// </summary>
-    public virtual Image? Image { get; set; }
+    public virtual Photo Photo { get; set; }
 }
