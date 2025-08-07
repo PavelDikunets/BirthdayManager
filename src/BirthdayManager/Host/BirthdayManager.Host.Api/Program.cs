@@ -5,8 +5,6 @@ using BirthdayManager.Contracts.Contexts.Photos.Responses;
 using BirthdayManager.Host.Api.Controllers;
 using BirthdayManager.Host.Api.Middlewares;
 using BirthdayManager.Infrastructure.ComponentRegistrar;
-using BirthdayManager.Infrastructure.DataAccess;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
