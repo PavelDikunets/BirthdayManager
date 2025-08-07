@@ -25,6 +25,22 @@
       - pg-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  migrations:
+    container_name: birthday.manager.migrator
+    build:
+      context: .
+      dockerfile: src/BirthdayManager/Host/BirthdayManager.Host.Migrator/DockerFile
+    environment:
+      - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=BirthdayManager;UserId=postgres;Password=password
+    depends_on:
+      postgres:
+        condition: service_healthy
+          
 volumes:
   pg-data:
