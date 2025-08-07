@@ -12,7 +12,7 @@ public class BirthdayManagerDbContext : DbContext
     /// Инициализирует экземпляр <see cref="BirthdayManagerDbContext"/>.
     /// </summary>
     /// <param name="options">Опции.</param>
-    public BirthdayManagerDbContext(DbContextOptions<BirthdayManagerDbContext> options) : base(options)
+    public BirthdayManagerDbContext(DbContextOptions options) : base(options)
     {
     }
 
