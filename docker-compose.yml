@@ -1,9 +1,23 @@
 ﻿services:
+  api:
+    container_name: birthday.manager.api
+    restart: always
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: src/BirthdayManager/Host/BirthdayManager.Host.Api/DockerFile
+    environment:
+      - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=BirthdayManager;UserId=postgres;Password=password
+    ports:
+      - "8080:8080"
+
   postgres:
     container_name: database
     image: postgres
     restart: always
     environment:
+      POSTGRES_DB: BirthdayManager
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     volumes:
