@@ -15,9 +15,14 @@ BirthdayManager - это **веб-API**, которое позволяет:
 ### С Docker
 ```bash
 git clone https://github.com/PavelDikunets/BirthdayManager.git
+```
+```bash
 cd BirthdayManager
+```
+```bash
 docker-compose up -d
 ```
+
 API: `http://localhost:8080`  
 Swagger: `http://localhost:8080/swagger`
 
@@ -27,6 +32,8 @@ Swagger: `http://localhost:8080/swagger`
 - Запустить:
 ```bash
 cd src/BirthdayManager/Host/BirthdayManager.Host.Api
+```
+```bash
 dotnet run
 ```
 
