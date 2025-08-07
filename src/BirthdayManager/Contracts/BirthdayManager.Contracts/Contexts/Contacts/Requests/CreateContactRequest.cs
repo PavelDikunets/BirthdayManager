@@ -4,9 +4,9 @@ using BirthdayManager.Contracts.Enums;
 namespace BirthdayManager.Contracts.Contexts.Contacts.Requests;
 
 /// <summary>
-/// Модель для создания контакта.
+/// Модель создания контакта.
 /// </summary>
-public class CreateContactDto
+public class CreateContactRequest
 {
     /// <summary>
     /// Имя.
@@ -27,5 +27,5 @@ public class CreateContactDto
     /// Тип контакта.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public ContactTypeDto Type { get; set; }
+    public ContactType Type { get; set; }
 }
