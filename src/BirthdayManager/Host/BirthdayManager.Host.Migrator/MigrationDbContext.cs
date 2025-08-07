@@ -5,7 +5,7 @@ namespace BirthdayManager.Host.Migrator;
 
 public class MigrationDbContext : BirthdayManagerDbContext
 {
-    public MigrationDbContext(DbContextOptions options) : base(options)
+    public MigrationDbContext(DbContextOptions<MigrationDbContext> options) : base(options)
     {
     }
 }
