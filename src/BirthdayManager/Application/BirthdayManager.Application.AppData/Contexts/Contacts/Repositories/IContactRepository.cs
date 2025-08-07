@@ -1,5 +1,4 @@
-﻿using BirthdayManager.Contracts.Contexts.Contacts.Requests;
-using BirthdayManager.Domain.Contacts;
+﻿using BirthdayManager.Domain.Contacts;
 
 namespace BirthdayManager.Application.AppData.Contexts.Contacts.Repositories;
 
@@ -43,13 +42,21 @@ public interface IContactRepository
     /// </summary>
     /// <param name="id">Идентификатор контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task DeleteByIdAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Проверяет существование контакта по идентификатору.
+    /// </summary>
+    /// <param name="id">Идентификатор контакта.</param>
+    /// <param name="cancellationToken">Токен отмены операции.</param>
+    /// <returns>True, если контакт существует, иначе false.</returns>
+    Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Проверяет наличие контакта.
+    /// Проверяет существование контакта.
     /// </summary>
-    /// <param name="contact">Контакт.</param>
+    /// <param name="contact">Сущность контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
-    /// <returns>True - контакт существует. False - контакт не существует.</returns>
-    Task<bool> IsExistsAsync(Contact contact, CancellationToken cancellationToken);
+    /// <returns>True, если контакт существует, иначе false.</returns>
+    Task<bool> ExistsAsync(Contact contact, CancellationToken cancellationToken);
 }

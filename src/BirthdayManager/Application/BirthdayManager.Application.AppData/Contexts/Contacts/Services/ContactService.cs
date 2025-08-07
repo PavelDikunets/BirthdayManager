@@ -1,7 +1,6 @@
 ﻿using BirthdayManager.Application.AppData.Contexts.Contacts.Repositories;
 using BirthdayManager.Contracts.Contexts.Contacts.Requests;
 using BirthdayManager.Contracts.Contexts.Contacts.Responses;
-using BirthdayManager.Contracts.Enums;
 using BirthdayManager.Domain.Contacts;
 
 namespace BirthdayManager.Application.AppData.Contexts.Contacts.Services;
@@ -9,114 +8,96 @@ namespace BirthdayManager.Application.AppData.Contexts.Contacts.Services;
 /// <inheritdoc />
 public class ContactService : IContactService
 {
-    private readonly IContactRepository _repository;
+    private readonly IContactRepository _contactRepository;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="ContactService"/>.
     /// </summary>
-    /// <param name="repository">Репозиторий контрактов.</param>
-    public ContactService(IContactRepository repository)
+    /// <param name="contactRepository">Репозиторий контрактов.</param>
+    public ContactService(IContactRepository contactRepository)
     {
-        _repository = repository;
+        _contactRepository = contactRepository;
     }
-    
-    /// <inheritdoc />
-    public async Task<Guid> CreateAsync(CreateContactDto model, CancellationToken cancellationToken)
-    {
-        await CheckIfExistsAsync(model, cancellationToken);
 
+    /// <inheritdoc />
+    public async Task<Guid> CreateAsync(CreateContactRequest model, CancellationToken cancellationToken)
+    {
         var contact = new Contact
         {
             FirstName = model.FirstName,
             LastName = model.LastName,
             Birthday = model.Birthday,
-            Type = (ContactType)model.Type
+            Type = model.Type
         };
 
-        return await _repository.CreateAsync(contact, cancellationToken);
-    }
+        var exists = await _contactRepository.ExistsAsync(contact, cancellationToken);
+        if (exists) throw new ArgumentException("Контакт с такими данными уже существует");
 
-
-    /// <inheritdoc />
-    public async Task<ContactResponseDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var contact = await _repository.GetByIdAsync(id, cancellationToken);
-
-        var model = new ContactResponseDto
-        {
-            FirstName = contact.FirstName,
-            LastName = contact.LastName,
-            Birthday = contact.Birthday,
-            Type = (ContactTypeDto)contact.Type
-        };
-        return model;
+        return await _contactRepository.CreateAsync(contact, cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyCollection<ContactResponseDto>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<ContactDetailResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var contacts = await _repository.GetAllAsync(cancellationToken);
+        var contact = await GetContactOrThrowAsync(id, cancellationToken);
+        return ToDetailResponse(contact);
+    }
 
-        var models = contacts.Select(contact => new ContactResponseDto
+    /// <inheritdoc />
+    public async Task<IReadOnlyCollection<ContactsResponse>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        var contacts = await _contactRepository.GetAllAsync(cancellationToken);
+
+        return contacts.Select(contact => new ContactsResponse
         {
+            Id = contact.Id,
             FirstName = contact.FirstName,
             LastName = contact.LastName,
-            Birthday = contact.Birthday,
-            Type = (ContactTypeDto)contact.Type
+            Birthday = contact.Birthday
         }).ToList();
-
-        return models;
     }
 
     /// <inheritdoc />
-    public async Task<ContactResponseDto> UpdateAsync(Guid id, UpdateContactDto model,
+    public async Task EnsureExistsAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var exists = await _contactRepository.ExistsAsync(id, cancellationToken);
+        if (!exists) throw new KeyNotFoundException("Контакт не найден");
+    }
+
+    /// <inheritdoc />
+    public async Task<ContactDetailResponse> UpdateAsync(Guid id, UpdateContactRequest model,
         CancellationToken cancellationToken)
     {
-        var contact = await _repository.GetByIdAsync(id, cancellationToken);
-
-        await CheckIfExistsAsync(model, cancellationToken);
+        var contact = await GetContactOrThrowAsync(id, cancellationToken);
 
         contact.FirstName = model.FirstName;
         contact.LastName = model.LastName;
         contact.Birthday = model.Birthday;
-        contact.Type = contact.Type;
+        contact.Type = model.Type;
 
-        await _repository.UpdateAsync(contact, cancellationToken);
+        await _contactRepository.UpdateAsync(contact, cancellationToken);
 
-        var responseDto = new ContactResponseDto
-        {
-            FirstName = contact.FirstName,
-            LastName = contact.LastName,
-            Birthday = contact.Birthday,
-            Type = (ContactTypeDto)contact.Type
-        };
-
-        return responseDto;
+        return ToDetailResponse(contact);
     }
 
     /// <inheritdoc />
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _repository.DeleteAsync(id, cancellationToken);
+        await _contactRepository.DeleteByIdAsync(id, cancellationToken);
     }
-
-    public async Task<bool> IsExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
+    
+    
+    private static ContactDetailResponse ToDetailResponse(Contact contact) => new()
     {
-        var contact = new Contact
-        {
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Birthday = model.Birthday,
-            Type = (ContactType)model.Type
-        };
-
-        return await _repository.IsExistsAsync(contact, cancellationToken);
-    }
-
-
-    private async Task CheckIfExistsAsync(CreateContactDto model, CancellationToken cancellationToken)
+        FirstName = contact.FirstName,
+        LastName = contact.LastName,
+        Birthday = contact.Birthday,
+        Type = contact.Type
+    };
+    
+    private async Task<Contact> GetContactOrThrowAsync(Guid id, CancellationToken cancellationToken)
     {
-        var exists = await IsExistsAsync(model, cancellationToken);
-        if (exists) throw new ArgumentException("Контакт с такими данными уже существует.");
+        return await _contactRepository.GetByIdAsync(id, cancellationToken)
+               ?? throw new KeyNotFoundException("Контакт не найден");
     }
 }
