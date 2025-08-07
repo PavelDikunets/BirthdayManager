@@ -27,6 +27,7 @@ API: `http://localhost:8080`
 Swagger: `http://localhost:8080/swagger`
 
 ### Без Docker
+- Установить .NET 8 SDK
 - Установить PostgreSQL 
 - Обновить строку подключения в `appsettings.json`
 - Запустить:
@@ -36,6 +37,9 @@ cd src/BirthdayManager/Host/BirthdayManager.Host.Api
 ```bash
 dotnet run
 ```
+
+API: `http://localhost:5033`  
+Swagger: `http://localhost:5033/swagger`
 
 ## 🛠️ Технологический стек
 - **.NET 8**
