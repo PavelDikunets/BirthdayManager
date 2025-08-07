@@ -1,5 +1,4 @@
 # BirthdayManager 🎂
- Веб-API для управления днями рождения.
 
 ![API Screenshot](docs/images/api-screenshot.png)
 
