@@ -54,15 +54,6 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-try
-{
-    await ApplyMigrationsAsync(app);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Ошибка применения миграций: {ex.Message}");
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -73,11 +64,3 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
-return;
-
-static async Task ApplyMigrationsAsync(WebApplication app)
-{
-    using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<BirthdayManagerDbContext>();
-    await dbContext.Database.MigrateAsync();
-}
