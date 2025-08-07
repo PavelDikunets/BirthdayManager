@@ -37,10 +37,6 @@ public class Repository<TEntity, TContext> : IBaseRepository<TEntity, TContext>
     public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await DbSet.FindAsync([id], cancellationToken);
-
-        if (entity == null)
-            throw new KeyNotFoundException();
-
         return entity;
     }
 
@@ -61,6 +57,8 @@ public class Repository<TEntity, TContext> : IBaseRepository<TEntity, TContext>
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
+        if (entity == null)
+            return;
 
         DbSet.Remove(entity);
         await DbContext.SaveChangesAsync(cancellationToken);

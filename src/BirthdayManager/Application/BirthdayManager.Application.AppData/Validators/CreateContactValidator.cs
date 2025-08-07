@@ -1,9 +1,9 @@
 ﻿using BirthdayManager.Contracts.Contexts.Contacts.Requests;
 using FluentValidation;
 
-namespace BirthdayManager.Application.AppData.Contexts.Contacts.Validators;
+namespace BirthdayManager.Application.AppData.Validators;
 
-public class CreateContactValidator : AbstractValidator<CreateContactDto>
+public class CreateContactValidator : AbstractValidator<CreateContactRequest>
 {
     public CreateContactValidator()
     {

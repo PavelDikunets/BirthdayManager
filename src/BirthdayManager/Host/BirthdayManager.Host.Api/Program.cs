@@ -1,6 +1,7 @@
 using BirthdayManager.Contracts.Contexts.Contacts.Requests;
 using BirthdayManager.Contracts.Contexts.Contacts.Responses;
-using BirthdayManager.Contracts.Enums;
+using BirthdayManager.Contracts.Contexts.Photos.Requests;
+using BirthdayManager.Contracts.Contexts.Photos.Responses;
 using BirthdayManager.Host.Api.Controllers;
 using BirthdayManager.Host.Api.Middlewares;
 using BirthdayManager.Infrastructure.ComponentRegistrar;
@@ -10,7 +11,12 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers( );
+builder.Services.AddApplicationServices();
+builder.Services.AddRepositories();
+builder.Services.AddFluentValidation();
+builder.Services.AddDbContext(builder.Configuration.GetConnectionString("Postgres"));
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -20,14 +26,16 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "API для ведения списка дней рождения"
     });
-    
+
     var docTypeMarkers = new[]
     {
-        typeof(CreateContactDto),
-        typeof(UpdateContactDto),
-        typeof(ContactResponseDto),
+        typeof(CreateContactRequest),
+        typeof(UpdateContactRequest),
+        typeof(ContactDetailResponse),
         typeof(ContactController),
-        typeof(ContactTypeDto)
+        typeof(UploadPhotoRequest),
+        typeof(PhotoInfoResponse),
+        typeof(PhotoResponse)
     };
 
     foreach (var marker in docTypeMarkers)
@@ -42,12 +50,9 @@ builder.Services.AddSwaggerGen(options =>
     }
 });
 
-builder.Services.AddApplicationServices();
-builder.Services.AddRepositories();
-builder.Services.AddFluentValidation();
-builder.Services.AddDbContext(builder.Configuration.GetConnectionString("Postgres"));
-
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 try
 {
@@ -57,8 +62,6 @@ catch (Exception ex)
 {
     Console.WriteLine($"Ошибка применения миграций: {ex.Message}");
 }
-
-app.UseMiddleware<ErrorHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

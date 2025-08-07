@@ -19,14 +19,14 @@ public class ContactController : ControllerBase
     /// <summary>
     /// Инициализирует экземпляр <see cref="ContactController"/>.
     /// </summary>
-    /// <param name="contactService">Сервис контактов.</param>
+    /// <param name="contactService">Сервис для работы с контактами.</param>
     public ContactController(IContactService contactService)
     {
         _contactService = contactService;
     }
 
     /// <summary>
-    /// Создает новый контакт.
+    /// Создать контакт.
     /// </summary>
     /// <param name="model">Модель создания контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
@@ -34,53 +34,53 @@ public class ContactController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateContactAsync([FromForm] CreateContactDto model,
+    public async Task<IActionResult> CreateAsync([FromBody] CreateContactRequest model,
         CancellationToken cancellationToken)
     {
-        var contactId = await _contactService.CreateAsync(model, cancellationToken);
-        return Created($"api/contacts/{contactId}", contactId);
+        var id = await _contactService.CreateAsync(model, cancellationToken);
+        return Created($"api/contacts/{id}", id);
     }
 
     /// <summary>
-    /// Получает контакт по идентификатору.
+    /// Получить контакт.
     /// </summary>
     /// <param name="id">Идентификатор контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Модель контакта.</returns>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ContactDetailResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetContactByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var contact = await _contactService.GetByIdAsync(id, cancellationToken);
         return Ok(contact);
     }
 
     /// <summary>
-    /// Получает все контакты.
+    /// Получить список контактов.
     /// </summary>
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Коллекция контактов.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllContactsAsync(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ContactsResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var contacts = await _contactService.GetAllAsync(cancellationToken);
         return Ok(contacts);
     }
 
     /// <summary>
-    /// Обновляет существующий контакт.
+    /// Обновить контакт.
     /// </summary>
     /// <param name="id">Идентификатор контакта.</param>
     /// <param name="model">Модель обновления контакта.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Обновленная модель контакта.</returns>
     [HttpPut("{id:guid}")]
-    [ProducesResponseType(typeof(ContactResponseDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ContactDetailResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateContactAsync([FromRoute] Guid id, [FromForm] UpdateContactDto model,
+    public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateContactRequest model,
         CancellationToken cancellationToken)
     {
         var updatedContact = await _contactService.UpdateAsync(id, model, cancellationToken);
@@ -88,17 +88,16 @@ public class ContactController : ControllerBase
     }
 
     /// <summary>
-    /// Удаляет контакт по идентификатору.
+    /// Удалить контакт.
     /// </summary>
     /// <param name="id">Идентификатор контакта для удаления.</param>
     /// <param name="cancellationToken">Токен отмены операции.</param>
     /// <returns>Результат операции удаления контакта.</returns>
     [HttpDelete("{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteContactAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await _contactService.DeleteAsync(id, cancellationToken);
-        return Ok();
+        return NoContent();
     }
 }
