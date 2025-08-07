@@ -9,11 +9,12 @@
       dockerfile: src/BirthdayManager/Host/BirthdayManager.Host.Api/DockerFile
     environment:
       - ConnectionStrings__Postgres=Host=postgres;Port=5432;Database=BirthdayManager;UserId=postgres;Password=password
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "8080:8080"
 
   postgres:
-    container_name: database
+    container_name: birthday.manager.database
     image: postgres
     restart: always
     environment:
