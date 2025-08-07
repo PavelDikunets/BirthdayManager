@@ -27,6 +27,7 @@ API: `http://localhost:8080`
 Swagger: `http://localhost:8080/swagger`
 
 ### Без Docker
+- Установить .NET 8 SDK
 - Установить PostgreSQL 
 - Обновить строку подключения в `appsettings.json`
 - Запустить:
