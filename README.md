@@ -30,9 +30,17 @@ Swagger: `http://localhost:8080/swagger`
 - Установить .NET 8 SDK
 - Установить PostgreSQL 
 - Обновить строку подключения в `appsettings.json`
-- Запустить:
+- Запустить мигратор:
 ```bash
-cd src/BirthdayManager/Host/BirthdayManager.Host.Api
+cd src/BirthdayManager/Host/BirthdayManager.Host.Migrator
+```
+```bash
+dotnet run
+
+```
+- Запустить Api:
+```bash
+cd ../../../../src/BirthdayManager/Host/BirthdayManager.Host.Api
 ```
 ```bash
 dotnet run
