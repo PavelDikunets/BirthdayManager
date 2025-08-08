@@ -11,23 +11,16 @@ BirthdayManager - это **веб-API**, которое позволяет:
 - Загружать и хранить фотографии контактов
 
 ## 🚀 Быстрый старт
-### С Docker
+
 ```bash
 git clone https://github.com/PavelDikunets/BirthdayManager.git
 ```
 ```bash
 cd BirthdayManager
 ```
-```bash
-docker-compose up -d
-```
-
-API: `http://localhost:8080`  
-Swagger: `http://localhost:8080/swagger`
-
 ### Без Docker
 - Установить .NET 8 SDK
-- Установить PostgreSQL 
+- Установить PostgreSQL
 - Обновить строку подключения в `appsettings.json`
 - Запустить мигратор:
 ```bash
@@ -47,6 +40,17 @@ dotnet run
 
 API: `http://localhost:5033`  
 Swagger: `http://localhost:5033/swagger`
+
+
+### С Docker
+```bash
+docker-compose up -d
+```
+
+API: `http://localhost:8080`  
+Swagger: `http://localhost:8080/swagger`
+
+
 
 ## 🛠️ Технологический стек
 - **.NET 8**
