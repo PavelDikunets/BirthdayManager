@@ -18,6 +18,14 @@ git clone https://github.com/PavelDikunets/BirthdayManager.git
 ```bash
 cd BirthdayManager
 ```
+### С Docker
+```bash
+docker-compose up -d
+```
+
+API: `http://localhost:8080`  
+Swagger: `http://localhost:8080/swagger`
+
 ### Без Docker
 - Установить .NET 8 SDK
 - Установить PostgreSQL
@@ -40,16 +48,6 @@ dotnet run
 
 API: `http://localhost:5033`  
 Swagger: `http://localhost:5033/swagger`
-
-
-### С Docker
-```bash
-docker-compose up -d
-```
-
-API: `http://localhost:8080`  
-Swagger: `http://localhost:8080/swagger`
-
 
 
 ## 🛠️ Технологический стек
